@@ -6,6 +6,9 @@ namespace Serilog;
 
 public static class MemorySinkLoggerConfigurationExtensions
 {
+
+    //ref https://github.com/AndrewKeepCoding/serilog-sinks-memorysink
+
     public static LoggerConfiguration MemorySink<T>(
         this LoggerSinkConfiguration loggerSinkConfiguration,
         out ILogSource<T> logEventSource,

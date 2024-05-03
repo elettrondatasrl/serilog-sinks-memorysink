@@ -43,7 +43,7 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
         return LogCollection.Count;
     }
 
-    public async Task<IEnumerable<T>> GetLogs(int start = 0, int requiredCount = int.MaxValue, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<T>> GetLogs(int start = 0, int maxCount = int.MaxValue, CancellationToken cancellationToken = default)
     {
         if (LogCollection.Count is 0)
         {
@@ -62,7 +62,7 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
 
             return LogCollection
                 .Skip(startIndex)
-                .Take(requiredCount)
+                .Take(maxCount)
                 .ToList();
         }
         finally
