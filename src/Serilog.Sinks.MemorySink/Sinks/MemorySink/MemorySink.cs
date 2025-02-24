@@ -121,7 +121,7 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
 
                 for (int i = 0; i < _options.MaxBatchSize; i++)
                 {
-                    if (_channel.Reader.TryRead(out LogEvent? logEvent) is false ||
+                    if (_channel.Reader.TryRead(out LogEvent logEvent) is false ||
                         logEvent is null)
                     {
                         break;

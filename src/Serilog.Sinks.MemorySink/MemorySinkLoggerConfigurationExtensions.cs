@@ -12,7 +12,7 @@ public static class MemorySinkLoggerConfigurationExtensions
     public static LoggerConfiguration MemorySink<T>(
         this LoggerSinkConfiguration loggerSinkConfiguration,
         out ILogSource<T> logEventSource,
-        Action<MemorySinkOptions<T>>? options = null)
+        Action<MemorySinkOptions<T>> options = null)
     {
         var memorySinkOptions = new MemorySinkOptions<T>();
         options?.Invoke(memorySinkOptions);

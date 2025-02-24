@@ -1,12 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFramework>net8.0-windows10.0.22000.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <RootNamespace>Serilog.Sinks.MemorySink</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <LangVersion>latest</LangVersion>
-    <Platforms>AnyCPU;x64</Platforms>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <Platforms>x64</Platforms>
+    <OutputType>Library</OutputType>
+    <AppendTargetFrameworkTooutputsPath>false</AppendTargetFrameworkTooutputsPath>
+    <AppendRuntimeIdentifierTooutputsPath>false</AppendRuntimeIdentifierTooutputsPath>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
