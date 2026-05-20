@@ -11,7 +11,13 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
 {
     private readonly MemorySinkOptions<T> _options = options;
 
-    private readonly Channel<LogEvent> _channel = Channel.CreateUnbounded<LogEvent>();
+    private readonly Channel<LogEvent> _channel = Channel.CreateBounded<LogEvent>(
+        new BoundedChannelOptions(Math.Max(1, options.ChannelCapacity))
+        {
+            FullMode = BoundedChannelFullMode.DropOldest,
+            SingleReader = true,
+            SingleWriter = false
+        });
 
     private readonly SemaphoreSlim _semaphore = new(initialCount: 1);
 
@@ -50,9 +56,12 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
             return [];
         }
 
+        bool semaphoreEntered = false;
+
         try
         {
             await _semaphore.WaitAsync(cancellationToken);
+            semaphoreEntered = true;
             int startIndex = start - LogCollectionFirstElementIndex;
 
             if (startIndex < 0)
@@ -67,7 +76,10 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
         }
         finally
         {
-            _semaphore.Release();
+            if (semaphoreEntered)
+            {
+                _semaphore.Release();
+            }
         }
     }
 
@@ -84,15 +96,21 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
             return;
         }
 
+        bool semaphoreEntered = false;
+
         try
         {
             await _semaphore.WaitAsync(cancellationToken);
+            semaphoreEntered = true;
             LogCollectionFirstElementIndex = 0;
             LogCollection.Clear();
         }
         finally
         {
-            _semaphore.Release();
+            if (semaphoreEntered)
+            {
+                _semaphore.Release();
+            }
         }
     }
 
@@ -130,7 +148,7 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
                     logEventsBatch.Add(logEvent);
 
                     if (cancellationToken.IsCancellationRequested is true ||
-                        stopwatch.ElapsedMilliseconds > _options.ProcessingInterval.Milliseconds)
+                        stopwatch.ElapsedMilliseconds > _options.ProcessingInterval.TotalMilliseconds)
                     {
                         break;
                     }
@@ -164,6 +182,8 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
 
     private void AddLogs(IList<LogEvent> logEvents, CancellationToken cancellationToken)
     {
+        bool semaphoreEntered = false;
+
         try
         {
             if (logEvents.Count <= 0)
@@ -172,12 +192,14 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
             }
 
             _semaphore.Wait(cancellationToken);
+            semaphoreEntered = true;
 
-            IEnumerable<T> logs = _options.LogEventConverter is not null
+            List<T> logs = (_options.LogEventConverter is not null
                 ? logEvents.Select(logEvent => _options.LogEventConverter(logEvent))
-                : logEvents.Cast<T>();
+                : logEvents.Cast<T>())
+                .ToList();
 
-            int removingCount = LogCollection.Count + logs.Count() - _options.MaxLogsCount;
+            int removingCount = LogCollection.Count + logs.Count - _options.MaxLogsCount;
 
             if (removingCount > 0)
             {
@@ -189,7 +211,10 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
         }
         finally
         {
-            _semaphore.Release();
+            if (semaphoreEntered)
+            {
+                _semaphore.Release();
+            }
         }
     }
 }

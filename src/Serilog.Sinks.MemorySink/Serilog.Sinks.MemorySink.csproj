@@ -5,15 +5,14 @@
     <RootNamespace>Serilog.Sinks.MemorySink</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <RootNamespace>MemorySink</RootNamespace>
-    <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <Platforms>x64</Platforms>
+    <Platforms>x64;AnyCPU</Platforms>
     <OutputType>Library</OutputType>
     <AppendTargetFrameworkTooutputsPath>false</AppendTargetFrameworkTooutputsPath>
     <AppendRuntimeIdentifierTooutputsPath>false</AppendRuntimeIdentifierTooutputsPath>
     <EnableMsixTooling>true</EnableMsixTooling>
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
@@ -32,7 +31,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright (c) Andrew KeepCoding 2024</Copyright>
     <PackageTags>serilog;sinks;memory</PackageTags>
-    <RootNamespace>Serilog</RootNamespace>
     <PackageProjectUrl>https://github.com/AndrewKeepCoding/serilog-sinks-memorysink</PackageProjectUrl>
     <RepositoryUrl>https://github.com/AndrewKeepCoding/serilog-sinks-memorysink</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

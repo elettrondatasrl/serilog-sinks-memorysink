@@ -10,6 +10,8 @@ public sealed class MemorySinkOptions<T>
 
     public int MaxBatchSize { get; set; } = 100;
 
+    public int ChannelCapacity { get; set; } = 10000;
+
     public Func<LogEvent, T> LogEventConverter { get; set; }
 
     public Action<Exception> OnException { get; set; }
