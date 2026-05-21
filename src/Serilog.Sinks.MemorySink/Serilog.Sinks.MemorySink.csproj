@@ -26,13 +26,13 @@
     <PackageId>Serilog.Sinks.MemorySink</PackageId>
     <Product>Serilog.Sinks.MemorySink</Product>
     <Description>A Serilog sink that store log events in memory. You can retrieve these logs and render them in your own log viewer.</Description>
-    <Version>0.1.1-alpha</Version>
-    <Authors>Andrew KeepCoding</Authors>
+    <Version>0.1.1</Version>
+    <Authors>Fabio Baraldi</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright (c) Andrew KeepCoding 2024</Copyright>
+    <Copyright>Copyright (c) Elettrondata srl 2026</Copyright>
     <PackageTags>serilog;sinks;memory</PackageTags>
-    <PackageProjectUrl>https://github.com/AndrewKeepCoding/serilog-sinks-memorysink</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/AndrewKeepCoding/serilog-sinks-memorysink</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/elettrondatasrl/serilog-sinks-memorysink</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/elettrondatasrl/serilog-sinks-memorysink</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
