@@ -20,7 +20,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AsyncAwaitBestPractices" Version="10.0.0" />
-    <PackageReference Include="Serilog" Version="4.3.1" />
+    <PackageReference Include="Serilog" Version="4.4.0" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -28,7 +28,7 @@
     <PackageId>Serilog.Sinks.MemorySink</PackageId>
     <Product>Serilog.Sinks.MemorySink</Product>
     <Description>A Serilog sink that store log events in memory. You can retrieve these logs and render them in your own log viewer.</Description>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>Fabio Baraldi</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright (c) Elettrondata srl 2026</Copyright>
@@ -40,6 +40,8 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AssemblyVersion>0.1.2</AssemblyVersion>
+    <FileVersion>0.1.2</FileVersion>
     <!--<PackageIcon>icon.png</PackageIcon>-->
   </PropertyGroup>
 
