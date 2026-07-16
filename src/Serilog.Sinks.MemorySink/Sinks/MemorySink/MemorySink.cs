@@ -23,7 +23,7 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
 
     private Task UpdatingTask { get; set; } = Task.CompletedTask;
 
-    private CancellationTokenSource CancellationTokenSource { get; set; } = new();
+    private CancellationTokenSource CancellationTokenSource { get; } = new();
 
     private List<T> LogCollection { get; } = [];
 
@@ -39,7 +39,6 @@ internal sealed class MemorySink<T>(MemorySinkOptions<T> options) : ILogEventSin
 
     public void Initialize()
     {
-        CancellationTokenSource = new CancellationTokenSource();
         UpdatingTask = ProcessLogs(CancellationTokenSource.Token);
         UpdatingTask.SafeFireAndForget(_options.OnException);
     }

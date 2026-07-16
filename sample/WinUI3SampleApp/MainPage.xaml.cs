@@ -16,6 +16,7 @@ public sealed partial class MainPage : Page
     {
         InitializeComponent();
         MinimumLevelComboBox.SelectedItem = LogEventLevel.Information;
+        Unloaded += MainPage_Unloaded;
     }
 
     public LogEventLevel[] LogEventLevels { get; } = Enum.GetValues<LogEventLevel>();
@@ -35,14 +36,13 @@ public sealed partial class MainPage : Page
 
         if (toggleSwitch.IsOn is true)
         {
+            DisposeLogViewerUpdateCancellationTokenSource();
             LogViewerUpdateCancelllationTokenSource = new();
             await KeepFetchingLogs(LogViewerUpdateCancelllationTokenSource.Token);
         }
         else
         {
-            LogViewerUpdateCancelllationTokenSource?.Cancel();
-            LogViewerUpdateCancelllationTokenSource?.Dispose();
-            LogViewerUpdateCancelllationTokenSource = null;
+            DisposeLogViewerUpdateCancellationTokenSource();
         }
     }
 
@@ -98,5 +98,18 @@ public sealed partial class MainPage : Page
     {
         LogEvents.Clear();
         await App.LogSource.ClearLogs();
+    }
+
+    private void MainPage_Unloaded(object sender, RoutedEventArgs e)
+    {
+        DisposeLogViewerUpdateCancellationTokenSource();
+        Unloaded -= MainPage_Unloaded;
+    }
+
+    private void DisposeLogViewerUpdateCancellationTokenSource()
+    {
+        LogViewerUpdateCancelllationTokenSource?.Cancel();
+        LogViewerUpdateCancelllationTokenSource?.Dispose();
+        LogViewerUpdateCancelllationTokenSource = null;
     }
 }
